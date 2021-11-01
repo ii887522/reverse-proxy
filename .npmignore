@@ -1,0 +1,10 @@
+.github
+.vscode
+coverage
+test
+.dockerignore
+.editorconfig
+.gitignore
+CODE_OF_CONDUCT.md
+*.config.*js
+tsconfig.*

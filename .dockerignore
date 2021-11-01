@@ -1,0 +1,13 @@
+.github
+.vscode
+coverage
+node_modules
+test
+**/*.ts
+.editorconfig
+.gitignore
+.npmignore
+CODE_OF_CONDUCT.md
+Dockerfile
+*.config.*js
+tsconfig.*

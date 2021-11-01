@@ -1,0 +1,18 @@
+[
+  {
+    "hostname": "example.dynv6.net",
+    "target": "https://localhost:1024"
+  },
+  {
+    "hostname": "www.example.dynv6.net",
+    "target": "https://localhost:1024"
+  },
+  {
+    "hostname": "abcdefg.dynv6.net",
+    "target": "https://localhost:1025"
+  },
+  {
+    "hostname": "www.abcdefg.dynv6.net",
+    "target": "https://localhost:1025"
+  }
+]
