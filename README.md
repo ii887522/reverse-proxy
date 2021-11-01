@@ -23,11 +23,10 @@ It is a server that forwards client request to the correct web server for proces
 
 ## Usage
 ```sh
-reverse-proxy <server-key-path> <server-cert-path> <client-cert-path> <routes-file-path>
+reverse-proxy <key-path> <cert-path> <routes-file-path>
 ```
-`server-key-path`: It must exists and must not ends with either '/' or '\'.<br />
-`server-cert-path`: It must exists and must not ends with either '/' or '\'.<br />
-`client-cert-path`: It must exists and must not ends with either '/' or '\'.<br />
+`key-path`: It must exists and must not ends with either '/' or '\'.<br />
+`cert-path`: It must exists and must not ends with either '/' or '\'.<br />
 `routes-file-path`: It must exists and must not ends with either '/' or '\'.<br />
 
 A routes file passed in must follow the format below:
@@ -51,19 +50,19 @@ A routes file passed in must follow the format below:
 [
   {
     "hostname": "ii887522.dynv6.net",
-    "target": "https://localhost:1024"
+    "target": "http://localhost:1024"
   },
   {
     "hostname": "www.ii887522.dynv6.net",
-    "target": "https://localhost:1024"
+    "target": "http://localhost:1024"
   },
   {
     "hostname": "example.dynv6.net",
-    "target": "https://localhost:1025"
+    "target": "http://localhost:1025"
   },
   {
     "hostname": "www.example.dynv6.net",
-    "target": "https://localhost:1025"
+    "target": "http://localhost:1025"
   }
 ]
 ```
@@ -100,12 +99,12 @@ npm run build
 
 ## Automatically restart project on change
 ```sh
-npm run dev <server-key-path> <server-cert-path> <client-cert-path> <routes-file-path>
+npm run dev <key-path> <cert-path> <routes-file-path>
 ```
 
 ## Start project
 ```sh
-npm start <server-key-path> <server-cert-path> <client-cert-path> <routes-file-path>
+npm start <key-path> <cert-path> <routes-file-path>
 ```
 
 ## Test project with code coverage analysis
@@ -115,7 +114,7 @@ npm test
 
 ## Automatically test project with code coverage analysis on change
 ```sh
-npm test:watch
+npm run test:watch
 ```
 
 ## Deploy project

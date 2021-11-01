@@ -4,7 +4,7 @@ import { readFileSync, access } from 'fs'
 import constants from './constants.js'
 
 export async function validateCommandLineArgs (commandLineArgs: string[]): Promise<void> {
-  if (commandLineArgs.length !== constants.requiredCommandLineArgCount) throw new Error('There must be exactly 4 command line arguments passed in! Please try again.')
+  if (commandLineArgs.length !== constants.requiredCommandLineArgCount) throw new Error('There must be exactly 3 command line arguments passed in! Please try again.')
   const result = []
   for (let i = constants.firstCommandLineArgIndex; i !== constants.requiredCommandLineArgCount; ++i) {
     if ((commandLineArgs[i]?.endsWith('/') ?? true) || (commandLineArgs[i]?.endsWith('\\') ?? true)) {

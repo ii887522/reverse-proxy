@@ -11,6 +11,6 @@
   },
   {
     "hostname": "www.abcdefg.dynv6.net",
-    "target": "https://localhost:1025"
+    "target": "http://localhost:1025"
   }
 ]
