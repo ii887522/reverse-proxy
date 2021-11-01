@@ -8,7 +8,7 @@ test('validate command line with no arguments', async () => {
     await validateCommandLineArgs(['node', 'index.js'])
   } catch (error: any) {
     expect(error).toBeInstanceOf(Error)
-    expect(error.message).toBe('There must be exactly 4 command line arguments passed in! Please try again.')
+    expect(error.message).toBe('There must be exactly 3 command line arguments passed in! Please try again.')
   }
 })
 
@@ -18,7 +18,7 @@ test('validate command line with 1 argument', async () => {
     await validateCommandLineArgs(['node', 'index.js', 'a'])
   } catch (error: any) {
     expect(error).toBeInstanceOf(Error)
-    expect(error.message).toBe('There must be exactly 4 command line arguments passed in! Please try again.')
+    expect(error.message).toBe('There must be exactly 3 command line arguments passed in! Please try again.')
   }
 })
 
@@ -28,17 +28,17 @@ test('validate command line with 2 arguments', async () => {
     await validateCommandLineArgs(['node', 'index.js', 'a', 'b'])
   } catch (error: any) {
     expect(error).toBeInstanceOf(Error)
-    expect(error.message).toBe('There must be exactly 4 command line arguments passed in! Please try again.')
+    expect(error.message).toBe('There must be exactly 3 command line arguments passed in! Please try again.')
   }
 })
 
-test('validate command line with 3 arguments', async () => {
+test('validate command line with 4 arguments', async () => {
   expect.assertions(2)
   try {
-    await validateCommandLineArgs(['node', 'index.js', 'a', 'b', 'c'])
+    await validateCommandLineArgs(['node', 'index.js', 'a', 'b', 'c', 'd'])
   } catch (error: any) {
     expect(error).toBeInstanceOf(Error)
-    expect(error.message).toBe('There must be exactly 4 command line arguments passed in! Please try again.')
+    expect(error.message).toBe('There must be exactly 3 command line arguments passed in! Please try again.')
   }
 })
 
@@ -48,24 +48,14 @@ test('validate command line with 5 arguments', async () => {
     await validateCommandLineArgs(['node', 'index.js', 'a', 'b', 'c', 'd', 'e'])
   } catch (error: any) {
     expect(error).toBeInstanceOf(Error)
-    expect(error.message).toBe('There must be exactly 4 command line arguments passed in! Please try again.')
-  }
-})
-
-test('validate command line with 6 arguments', async () => {
-  expect.assertions(2)
-  try {
-    await validateCommandLineArgs(['node', 'index.js', 'a', 'b', 'c', 'd', 'e', 'f'])
-  } catch (error: any) {
-    expect(error).toBeInstanceOf(Error)
-    expect(error.message).toBe('There must be exactly 4 command line arguments passed in! Please try again.')
+    expect(error.message).toBe('There must be exactly 3 command line arguments passed in! Please try again.')
   }
 })
 
 test("validate command line with path ends with '/' as the first argument", async () => {
   expect.assertions(2)
   try {
-    await validateCommandLineArgs(['node', 'index.js', 'a/', 'b', 'c', 'd'])
+    await validateCommandLineArgs(['node', 'index.js', 'a/', 'b', 'c'])
   } catch (error: any) {
     expect(error).toBeInstanceOf(Error)
     expect(error.message).toBe("File path must not ends with '/' or '\\'! Please try again.")
@@ -75,7 +65,7 @@ test("validate command line with path ends with '/' as the first argument", asyn
 test("validate command line with path ends with '\\' as the first argument", async () => {
   expect.assertions(2)
   try {
-    await validateCommandLineArgs(['node', 'index.js', 'a\\', 'b', 'c', 'd'])
+    await validateCommandLineArgs(['node', 'index.js', 'a\\', 'b', 'c'])
   } catch (error: any) {
     expect(error).toBeInstanceOf(Error)
     expect(error.message).toBe("File path must not ends with '/' or '\\'! Please try again.")
@@ -85,7 +75,7 @@ test("validate command line with path ends with '\\' as the first argument", asy
 test("validate command line with path ends with '/' as the second argument", async () => {
   expect.assertions(2)
   try {
-    await validateCommandLineArgs(['node', 'index.js', 'index.js', 'b/', 'c', 'd'])
+    await validateCommandLineArgs(['node', 'index.js', 'index.js', 'b/', 'c'])
   } catch (error: any) {
     expect(error).toBeInstanceOf(Error)
     expect(error.message).toBe("File path must not ends with '/' or '\\'! Please try again.")
@@ -95,7 +85,7 @@ test("validate command line with path ends with '/' as the second argument", asy
 test("validate command line with path ends with '\\' as the second argument", async () => {
   expect.assertions(2)
   try {
-    await validateCommandLineArgs(['node', 'index.js', 'index.js', 'b\\', 'c', 'd'])
+    await validateCommandLineArgs(['node', 'index.js', 'index.js', 'b\\', 'c'])
   } catch (error: any) {
     expect(error).toBeInstanceOf(Error)
     expect(error.message).toBe("File path must not ends with '/' or '\\'! Please try again.")
@@ -105,7 +95,7 @@ test("validate command line with path ends with '\\' as the second argument", as
 test("validate command line with path ends with '/' as the third argument", async () => {
   expect.assertions(2)
   try {
-    await validateCommandLineArgs(['node', 'index.js', 'index.js', 'index.ts', 'c/', 'd'])
+    await validateCommandLineArgs(['node', 'index.js', 'index.js', 'index.ts', 'c/'])
   } catch (error: any) {
     expect(error).toBeInstanceOf(Error)
     expect(error.message).toBe("File path must not ends with '/' or '\\'! Please try again.")
@@ -115,27 +105,7 @@ test("validate command line with path ends with '/' as the third argument", asyn
 test("validate command line with path ends with '\\' as the third argument", async () => {
   expect.assertions(2)
   try {
-    await validateCommandLineArgs(['node', 'index.js', 'index.js', 'index.ts', 'c\\', 'd'])
-  } catch (error: any) {
-    expect(error).toBeInstanceOf(Error)
-    expect(error.message).toBe("File path must not ends with '/' or '\\'! Please try again.")
-  }
-})
-
-test("validate command line with path ends with '/' as the fourth argument", async () => {
-  expect.assertions(2)
-  try {
-    await validateCommandLineArgs(['node', 'index.js', 'index.js', 'index.ts', 'README.md', 'd/'])
-  } catch (error: any) {
-    expect(error).toBeInstanceOf(Error)
-    expect(error.message).toBe("File path must not ends with '/' or '\\'! Please try again.")
-  }
-})
-
-test("validate command line with path ends with '\\' as the fourth argument", async () => {
-  expect.assertions(2)
-  try {
-    await validateCommandLineArgs(['node', 'index.js', 'index.js', 'index.ts', 'README.md', 'd\\'])
+    await validateCommandLineArgs(['node', 'index.js', 'index.js', 'index.ts', 'c\\'])
   } catch (error: any) {
     expect(error).toBeInstanceOf(Error)
     expect(error.message).toBe("File path must not ends with '/' or '\\'! Please try again.")
@@ -144,7 +114,7 @@ test("validate command line with path ends with '\\' as the fourth argument", as
 
 test('validate command line with non-existent file path as the first argument', async () => {
   try {
-    await validateCommandLineArgs(['node', 'index.js', 'a', 'index.ts', 'README.md', 'package.json'])
+    await validateCommandLineArgs(['node', 'index.js', 'a', 'index.ts', 'README.md'])
   } catch (error: any) {
     return
   }
@@ -153,7 +123,7 @@ test('validate command line with non-existent file path as the first argument', 
 
 test('validate command line with non-existent file path as the second argument', async () => {
   try {
-    await validateCommandLineArgs(['node', 'index.js', 'index.js', 'b', 'README.md', 'package.json'])
+    await validateCommandLineArgs(['node', 'index.js', 'index.js', 'b', 'README.md'])
   } catch (error: any) {
     return
   }
@@ -162,23 +132,14 @@ test('validate command line with non-existent file path as the second argument',
 
 test('validate command line with non-existent file path as the third argument', async () => {
   try {
-    await validateCommandLineArgs(['node', 'index.js', 'index.js', 'index.ts', 'c', 'package.json'])
+    await validateCommandLineArgs(['node', 'index.js', 'index.js', 'index.ts', 'c'])
   } catch (error: any) {
     return
   }
   fail()
 })
 
-test('validate command line with non-existent file path as the fourth argument', async () => {
-  try {
-    await validateCommandLineArgs(['node', 'index.js', 'index.js', 'index.ts', 'README.md', 'd'])
-  } catch (error: any) {
-    return
-  }
-  fail()
-})
-
-test('validate command line with 4 arguments', async () => await validateCommandLineArgs(['node', 'index.js', 'index.js', 'index.ts', 'README.md', 'package.json']))
+test('validate command line with 3 arguments', async () => await validateCommandLineArgs(['node', 'index.js', 'index.js', 'index.ts', 'README.md']))
 
 test('validate an object as routes', () => {
   expect.assertions(2)
@@ -472,7 +433,7 @@ test('validate routes that contains 3 routes', () => {
 
 test('validate input with non-existent route file path', async () => {
   try {
-    await validateInput(['node', 'index.js', 'index.js', 'index.ts', 'README.md', 'a'])
+    await validateInput(['node', 'index.js', 'index.js', 'index.ts', 'a'])
   } catch (err: any) {
     return
   }
@@ -481,7 +442,7 @@ test('validate input with non-existent route file path', async () => {
 
 test('validate input with invalid routes', async () => {
   try {
-    await validateInput(['node', 'index.js', 'index.js', 'index.ts', 'README.md', 'test/invalid_routes.json'])
+    await validateInput(['node', 'index.js', 'index.js', 'index.ts', 'test/invalid_routes.json'])
   } catch (err: any) {
     return
   }
@@ -489,5 +450,5 @@ test('validate input with invalid routes', async () => {
 })
 
 test('validate input with valid routes', async () => {
-  await validateInput(['node', 'index.js', 'index.js', 'index.ts', 'README.md', 'test/valid_routes.json'])
+  await validateInput(['node', 'index.js', 'index.js', 'index.ts', 'test/valid_routes.json'])
 })

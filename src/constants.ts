@@ -2,9 +2,8 @@
 
 export default {
   firstCommandLineArgIndex: 2,
-  serverKeyPathIndex: 2,
-  serverCertPathIndex: 3,
-  clientCertPathIndex: 4,
-  routesFilePathIndex: 5,
-  requiredCommandLineArgCount: 6
+  keyPathIndex: 2,
+  certPathIndex: 3,
+  routesFilePathIndex: 4,
+  requiredCommandLineArgCount: 5
 }
