@@ -172,5 +172,5 @@ jobs:
         with:
           context: .
           push: true
-          tags: ii887522/reverse-proxy:latest
+          tags: ii887522/reverse-proxy:1.0.2
     needs: test

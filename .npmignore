@@ -6,5 +6,6 @@ test
 .editorconfig
 .gitignore
 CODE_OF_CONDUCT.md
+Dockerfile
 *.config.*js
 tsconfig.*
