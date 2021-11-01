@@ -1,6 +1,6 @@
 {
   "name": "@ii887522/reverse-proxy",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "It is a server that forwards client request to the correct web server for processing, and also forwards server response to the correct web client browser for presentation.",
   "main": "index.js",
   "bin": "index.js",
