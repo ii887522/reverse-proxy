@@ -51,7 +51,10 @@ jobs:
         id: outputs-cache
         uses: actions/cache@v2
         with:
-          path: dist
+          path: |
+            *.js
+            src/**/*.js
+            test/**/*.js
           key: ${{ runner.os }}-node-${{ hashFiles('*.ts', 'src/**/*.ts', 'test/**/*.ts') }}
       - name: Install dependencies
         run: npm ci
@@ -61,3 +64,110 @@ jobs:
       - if: steps.outputs-cache.outputs.cache-hit != 'true'
         run: npx tsc
     needs: lint
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ env.node-version }}
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+            ${{ runner.os }}-
+      - name: Cache outputs
+        uses: actions/cache@v2
+        with:
+          path: |
+            *.js
+            src/**/*.js
+            test/**/*.js
+          key: ${{ runner.os }}-node-${{ hashFiles('*.ts', 'src/**/*.ts', 'test/**/*.ts') }}
+      - name: Install dependencies
+        run: npm ci
+      - run: npm test
+      - name: Upload code coverage report
+        uses: actions/upload-artifact@v2
+        with:
+          name: code-coverage-report
+          path: coverage
+    needs: build
+  deploy-npm-package:
+    if: github.base_ref == 'master'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ env.node-version }}
+          registry-url: 'https://registry.npmjs.org'
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+            ${{ runner.os }}-
+      - name: Cache outputs
+        uses: actions/cache@v2
+        with:
+          path: |
+            *.js
+            src/**/*.js
+            test/**/*.js
+          key: ${{ runner.os }}-node-${{ hashFiles('*.ts', 'src/**/*.ts', 'test/**/*.ts') }}
+      - name: Install dependencies
+        run: npm ci
+      - run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+    needs: test
+  deploy-docker-image:
+    if: github.base_ref == 'master'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Use Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_TOKEN }}
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ env.node-version }}
+          registry-url: 'https://registry.npmjs.org'
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+            ${{ runner.os }}-
+      - name: Cache outputs
+        uses: actions/cache@v2
+        with:
+          path: |
+            *.js
+            src/**/*.js
+            test/**/*.js
+          key: ${{ runner.os }}-node-${{ hashFiles('*.ts', 'src/**/*.ts', 'test/**/*.ts') }}
+      - name: Install dependencies
+        run: npm ci
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: ii887522/reverse-proxy:latest
+    needs: test
