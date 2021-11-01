@@ -10,6 +10,7 @@
     "esModuleInterop": true,
     "experimentalDecorators": false,
     "forceConsistentCasingInFileNames": true,
+    "incremental": true,
     "importHelpers": true,
     "jsx": "preserve",
     "listFilesOnly": false,
@@ -24,8 +25,7 @@
     "removeComments": true,
     "skipLibCheck": true,
     "strict": true,
-    "target": "ES2020",
-    "outDir": "dist"
+    "target": "ES2020"
   },
   "typeAcquisition": {
     "enable": true

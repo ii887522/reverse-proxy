@@ -16,6 +16,57 @@ It is a server that forwards client request to the correct web server for proces
 - [Lint project](https://github.com/ii887522/reverse-proxy#lint-project)
 - [Automatically build project on save](https://github.com/ii887522/reverse-proxy#automatically-build-project-on-save)
 - [Automatically restart project on change](https://github.com/ii887522/reverse-proxy#automatically-restart-project-on-change)
+- [Start project](https://github.com/ii887522/reverse-proxy#start-project)
+- [Test project with code coverage analysis](https://github.com/ii887522/reverse-proxy#test-project-with-code-coverage-analysis)
+- [Automatically test project with code coverage analysis on change](https://github.com/ii887522/reverse-proxy#Automatically-test-project-with-code-coverage-analysis-on-change)
+- [Deploy project](https://github.com/ii887522/reverse-proxy#deploy-project)
+
+## Usage
+```sh
+reverse-proxy <server-key-path> <server-cert-path> <client-cert-path> <routes-file-path>
+```
+`server-key-path`: It must exists and must not ends with either '/' or '\'.<br />
+`server-cert-path`: It must exists and must not ends with either '/' or '\'.<br />
+`client-cert-path`: It must exists and must not ends with either '/' or '\'.<br />
+`routes-file-path`: It must exists and must not ends with either '/' or '\'.<br />
+
+A routes file passed in must follow the format below:
+```json
+[
+  {
+    "hostname": {
+      "type": "string",
+      "required": true
+    },
+    "target": {
+      "type": "string",
+      "required": true
+    }
+  }
+]
+```
+
+#### **Example**
+```json
+[
+  {
+    "hostname": "ii887522.dynv6.net",
+    "target": "https://localhost:1024"
+  },
+  {
+    "hostname": "www.ii887522.dynv6.net",
+    "target": "https://localhost:1024"
+  },
+  {
+    "hostname": "example.dynv6.net",
+    "target": "https://localhost:1025"
+  },
+  {
+    "hostname": "www.example.dynv6.net",
+    "target": "https://localhost:1025"
+  }
+]
+```
 
 ## Coding Style
 This project follows [Javascript Standard Style](https://standardjs.com/). Please familiarize yourself with the rules provided in the coding style and
@@ -49,5 +100,25 @@ npm run build
 
 ## Automatically restart project on change
 ```sh
-npm start
+npm run dev <server-key-path> <server-cert-path> <client-cert-path> <routes-file-path>
+```
+
+## Start project
+```sh
+npm start <server-key-path> <server-cert-path> <client-cert-path> <routes-file-path>
+```
+
+## Test project with code coverage analysis
+```sh
+npm test
+```
+
+## Automatically test project with code coverage analysis on change
+```sh
+npm test:watch
+```
+
+## Deploy project
+```sh
+npm run deploy
 ```
