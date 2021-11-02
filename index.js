@@ -36,6 +36,7 @@ function workerMain() {
     createServer({ key: readFileSync(process.argv[constants.keyPathIndex] ?? ''), cert: readFileSync(process.argv[constants.certPathIndex] ?? '') }, express().use(async (request, response) => {
         proxy.web(request, response, { target: (await routesPromise).find(route => request.hostname === route.hostname)?.target });
     })).listen(443);
+    express().use((request, response) => response.redirect(301, `https://${request.hostname}${request.originalUrl}`)).listen(80);
 }
 if (cluster.isPrimary)
     consume(primaryMain());

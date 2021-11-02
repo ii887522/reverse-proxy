@@ -18,11 +18,13 @@ export function spawnRevivableWorkers (): void {
 }
 
 export function supportIncrementalRestart (): void {
-  const keys = Object.keys(cluster.workers ?? { })
+  let keys = Object.keys(cluster.workers ?? { })
   process.on('SIGINT', () => {
     if (cluster.workers !== undefined) cluster.workers[keys.pop() ?? '']?.kill()
   })
   process.on('message', message => {
-    if (message === constants.LISTENING && keys.length !== 0 && cluster.workers !== undefined) cluster.workers[keys.pop() ?? '']?.kill()
+    if (message !== constants.LISTENING) return
+    if (keys.length !== 0 && cluster.workers !== undefined) cluster.workers[keys.pop() ?? '']?.kill()
+    else keys = Object.keys(cluster.workers ?? { })
   })
 }

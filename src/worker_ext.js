@@ -15,13 +15,17 @@ export function spawnRevivableWorkers() {
     });
 }
 export function supportIncrementalRestart() {
-    const keys = Object.keys(cluster.workers ?? {});
+    let keys = Object.keys(cluster.workers ?? {});
     process.on('SIGINT', () => {
         if (cluster.workers !== undefined)
             cluster.workers[keys.pop() ?? '']?.kill();
     });
     process.on('message', message => {
-        if (message === constants.LISTENING && keys.length !== 0 && cluster.workers !== undefined)
+        if (message !== constants.LISTENING)
+            return;
+        if (keys.length !== 0 && cluster.workers !== undefined)
             cluster.workers[keys.pop() ?? '']?.kill();
+        else
+            keys = Object.keys(cluster.workers ?? {});
     });
 }
