@@ -2,24 +2,45 @@
 
 'use strict'
 
+import cluster from 'cluster'
 import express from 'express'
 import httpProxy from 'http-proxy'
-import { readFileSync } from 'fs'
+import { readFile, readFileSync } from 'fs'
 import { createServer } from 'https'
+import { consume } from '@ii887522/hydro'
 import constants from './src/constants.js'
 import validateInput from './src/validate_input.js'
+import { spawnRevivableWorkers, supportIncrementalRestart } from './src/worker_ext.js'
 
-const routesPromise = validateInput(process.argv).catch(() => {
-  console.error('reverse-proxy <key-path> <cert-path> <routes-file-path>')
-  console.error("key-path: It must exists and must not ends with either '/' or '\\'.")
-  console.error("cert-path: It must exists and must not ends with either '/' or '\\'.")
-  console.error("routes-file-path: It must exists and must not ends with either '/' or '\\'.")
-  process.exit(-1)
-})
-const proxy = httpProxy.createProxyServer()
-createServer(
-  { key: readFileSync(process.argv[constants.keyPathIndex] ?? ''), cert: readFileSync(process.argv[constants.certPathIndex] ?? '') },
-  express().use(async (request, response) => {
-    proxy.web(request, response, { target: (await routesPromise).find(route => request.hostname === route.hostname)?.target })
+async function primaryMain (): Promise<void> {
+  try {
+    await validateInput(process.argv)
+    spawnRevivableWorkers()
+    supportIncrementalRestart()
+  } catch (error: any) {
+    console.error('reverse-proxy <key-path> <cert-path> <routes-file-path>')
+    console.error("key-path: It must exists and must not ends with either '/' or '\\'.")
+    console.error("cert-path: It must exists and must not ends with either '/' or '\\'.")
+    console.error("routes-file-path: It must exists and must not ends with either '/' or '\\'.")
+    process.exit(-1)
+  }
+}
+
+function workerMain (): void {
+  const routesPromise: Promise<Array<{ hostname: string, target: string }>> = new Promise((resolve, reject) => {
+    readFile(process.argv[constants.routesFilePathIndex] ?? '', (error, data) => {
+      if (error !== null) reject(error)
+      else resolve(JSON.parse(data.toString()))
+    })
   })
-).listen(443)
+  const proxy = httpProxy.createProxyServer()
+  createServer(
+    { key: readFileSync(process.argv[constants.keyPathIndex] ?? ''), cert: readFileSync(process.argv[constants.certPathIndex] ?? '') },
+    express().use(async (request, response) => {
+      proxy.web(request, response, { target: (await routesPromise).find(route => request.hostname === route.hostname)?.target })
+    })
+  ).listen(443)
+}
+
+if (cluster.isPrimary) consume(primaryMain())
+else workerMain()
