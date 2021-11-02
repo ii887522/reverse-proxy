@@ -5,5 +5,6 @@ export default {
   keyPathIndex: 2,
   certPathIndex: 3,
   routesFilePathIndex: 4,
-  requiredCommandLineArgCount: 5
+  requiredCommandLineArgCount: 5,
+  LISTENING: 0
 }
