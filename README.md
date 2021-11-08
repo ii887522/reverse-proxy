@@ -23,48 +23,66 @@ It is a server that forwards client request to the correct web server for proces
 
 ## Usage
 ```sh
-reverse-proxy <key-path> <cert-path> <routes-file-path>
+reverse-proxy <config-file-path>
 ```
-`key-path`: It must exists and must not ends with either '/' or '\'.<br />
-`cert-path`: It must exists and must not ends with either '/' or '\'.<br />
-`routes-file-path`: It must exists and must not ends with either '/' or '\'.<br />
+`config-file-path`: It must exists and must not ends with either '/' or '\\'.<br />
 
-A routes file passed in must follow the format below:
+A config file passed in must follow the format below:
 ```json
-[
-  {
-    "hostname": {
-      "type": "string",
-      "required": true
-    },
-    "target": {
-      "type": "string",
-      "required": true
-    }
+{
+  "keyPath": {
+    "type": "string",
+    "required": true,
+    "format": "[^/\\]$"
+  },
+  "certPath": {
+    "type": "string",
+    "required": true,
+    "format": "[^/\\]$"
+  },
+  "routes": {
+    "type": "array",
+    "required": true,
+    "value": [
+      {
+        "hostname": {
+          "type": "string",
+          "required": true
+        },
+        "target": {
+          "type": "string",
+          "required": true
+        }
+      }
+    ]
   }
-]
+}
 ```
 
 #### **Example**
 ```json
-[
-  {
-    "hostname": "ii887522.dynv6.net",
-    "target": "http://localhost:1024"
-  },
-  {
-    "hostname": "www.ii887522.dynv6.net",
-    "target": "http://localhost:1024"
-  },
-  {
-    "hostname": "example.dynv6.net",
-    "target": "http://localhost:1025"
-  },
-  {
-    "hostname": "www.example.dynv6.net",
-    "target": "http://localhost:1025"
-  }
-]
+{
+  "keyPath": "test/key.pem",
+  "certPath": "test/cert.pem",
+  "routes": [
+    {
+      "hostname": "example.dynv6.net",
+      "target": "http://localhost:1024"
+    },
+    {
+      "hostname": "www.example.dynv6.net",
+      "target": "http://localhost:1024"
+    },
+    {
+      "hostname": "abcdefg.dynv6.net",
+      "target": "http://localhost:1025"
+    },
+    {
+      "hostname": "www.abcdefg.dynv6.net",
+      "target": "http://localhost:1025"
+    }
+  ]
+}
 ```
 
 ## Coding Style
@@ -99,12 +117,12 @@ npm run build
 
 ## Automatically restart project on change
 ```sh
-npm run dev <key-path> <cert-path> <routes-file-path>
+npm run dev <config-file-path>
 ```
 
 ## Start project
 ```sh
-npm start <key-path> <cert-path> <routes-file-path>
+npm start <config-file-path>
 ```
 
 ## Test project with code coverage analysis
