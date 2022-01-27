@@ -93,7 +93,7 @@ A config file passed in must follow the format below:
 This project follows [Javascript Standard Style](https://standardjs.com/). Please familiarize yourself with the rules provided in the coding style and
 make sure all the proposed code changes in your commits are conforming to the style before making a merge request. You can also make use of
 StandardJS - Javascript Standard Style which is a [Visual Studio Code](https://code.visualstudio.com/) plugin and `npm run lint` command under the
-[Lint project](https://github.com/ii887522/reverse-proxy#lint-project) section to support you.
+[Lint the project](https://github.com/ii887522/reverse-proxy#lint-the-project) section to support you.
 
 ## Prerequisites
 - Windows 11 or Linux
