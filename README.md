@@ -13,16 +13,17 @@
 It is a server that forwards client request to the correct web server for processing, and also forwards server response to the correct web client browser for presentation.
 
 ## Table of contents
-- [Coding Style](https://github.com/ii887522/reverse-proxy#coding-style)
+- [Usage](https://github.com/ii887522/reverse-proxy#usage)
+- [Coding style](https://github.com/ii887522/reverse-proxy#coding-style)
 - [Prerequisites](https://github.com/ii887522/reverse-proxy#prerequisites)
 - [Install dependencies](https://github.com/ii887522/reverse-proxy#install-dependencies)
-- [Lint project](https://github.com/ii887522/reverse-proxy#lint-project)
-- [Automatically build project on save](https://github.com/ii887522/reverse-proxy#automatically-build-project-on-save)
-- [Automatically restart project on change](https://github.com/ii887522/reverse-proxy#automatically-restart-project-on-change)
-- [Start project](https://github.com/ii887522/reverse-proxy#start-project)
-- [Test project with code coverage analysis](https://github.com/ii887522/reverse-proxy#test-project-with-code-coverage-analysis)
-- [Automatically test project with code coverage analysis on change](https://github.com/ii887522/reverse-proxy#Automatically-test-project-with-code-coverage-analysis-on-change)
-- [Deploy project](https://github.com/ii887522/reverse-proxy#deploy-project)
+- [Lint the project](https://github.com/ii887522/reverse-proxy#lint-the-project)
+- [Build the project](https://github.com/ii887522/reverse-proxy#build-the-project)
+- [Automatically build the project on save](https://github.com/ii887522/reverse-proxy#automatically-build-the-project-on-save)
+- [Automatically restart the project on change](https://github.com/ii887522/reverse-proxy#automatically-restart-the-project-on-change)
+- [Start the project](https://github.com/ii887522/reverse-proxy#start-the-project)
+- [Test the project with code coverage analysis](https://github.com/ii887522/reverse-proxy#test-the-project-with-code-coverage-analysis)
+- [Automatically test the project with code coverage analysis on change](https://github.com/ii887522/reverse-proxy#Automatically-test-the-project-with-code-coverage-analysis-on-change)
 
 ## Usage
 ```sh
@@ -88,7 +89,7 @@ A config file passed in must follow the format below:
 }
 ```
 
-## Coding Style
+## Coding style
 This project follows [Javascript Standard Style](https://standardjs.com/). Please familiarize yourself with the rules provided in the coding style and
 make sure all the proposed code changes in your commits are conforming to the style before making a merge request. You can also make use of
 StandardJS - Javascript Standard Style which is a [Visual Studio Code](https://code.visualstudio.com/) plugin and `npm run lint` command under the
