@@ -1,65 +1,65 @@
 'use strict';
 import validateInput, { validateCommandLineArgs, validateConfig } from '../src/validate_input.js';
-test('validate command line with no arguments', async () => {
+test('validate command line with no arguments', () => {
     expect.assertions(2);
     try {
-        await validateCommandLineArgs(['node', 'index.js']);
+        validateCommandLineArgs(['node', 'index.js']);
     }
     catch (error) {
         expect(error).toBeInstanceOf(Error);
         expect(error.message).toBe('There must be exactly 1 command line argument passed in! Please try again.');
     }
 });
-test('validate command line with 2 arguments', async () => {
+test('validate command line with 2 arguments', () => {
     expect.assertions(2);
     try {
-        await validateCommandLineArgs(['node', 'index.js', 'a', 'b']);
+        validateCommandLineArgs(['node', 'index.js', 'a', 'b']);
     }
     catch (error) {
         expect(error).toBeInstanceOf(Error);
         expect(error.message).toBe('There must be exactly 1 command line argument passed in! Please try again.');
     }
 });
-test('validate command line with 3 arguments', async () => {
+test('validate command line with 3 arguments', () => {
     expect.assertions(2);
     try {
-        await validateCommandLineArgs(['node', 'index.js', 'a', 'b', 'c']);
+        validateCommandLineArgs(['node', 'index.js', 'a', 'b', 'c']);
     }
     catch (error) {
         expect(error).toBeInstanceOf(Error);
         expect(error.message).toBe('There must be exactly 1 command line argument passed in! Please try again.');
     }
 });
-test("validate command line with path ends with '/' as the first argument", async () => {
+test("validate command line with path ends with '/' as the first argument", () => {
     expect.assertions(2);
     try {
-        await validateCommandLineArgs(['node', 'index.js', 'a/']);
+        validateCommandLineArgs(['node', 'index.js', 'a/']);
     }
     catch (error) {
-        expect(error).toBeInstanceOf(Error);
+        expect(error).toBeInstanceOf(SyntaxError);
         expect(error.message).toBe("Config file path must not ends with '/' or '\\'! Please try again.");
     }
 });
-test("validate command line with path ends with '\\' as the first argument", async () => {
+test("validate command line with path ends with '\\' as the first argument", () => {
     expect.assertions(2);
     try {
-        await validateCommandLineArgs(['node', 'index.js', 'a\\']);
+        validateCommandLineArgs(['node', 'index.js', 'a\\']);
     }
     catch (error) {
-        expect(error).toBeInstanceOf(Error);
+        expect(error).toBeInstanceOf(SyntaxError);
         expect(error.message).toBe("Config file path must not ends with '/' or '\\'! Please try again.");
     }
 });
-test('validate command line with non-existent file path as the first argument', async () => {
+test('validate command line with non-existent file path as the first argument', () => {
     try {
-        await validateCommandLineArgs(['node', 'index.js', 'a']);
+        validateCommandLineArgs(['node', 'index.js', 'a']);
     }
     catch (error) {
         return;
     }
     fail();
 });
-test('validate command line with 1 argument', async () => await validateCommandLineArgs(['node', 'index.js', 'index.js']));
+test('validate command line with 1 argument', () => validateCommandLineArgs(['node', 'index.js', 'index.js']));
 test('validate a number as a config', () => {
     expect.assertions(2);
     try {
@@ -340,24 +340,24 @@ test('validate config with routes that contains 3 proper routes', () => {
         ]
     });
 });
-test('validate input without command line arguments', async () => {
+test('validate input without command line arguments', () => {
     try {
-        await validateInput(['node', 'index.js']);
+        validateInput(['node', 'index.js']);
     }
     catch (error) {
         return;
     }
     fail();
 });
-test('validate input with proper command line argument but improper config', async () => {
+test('validate input with proper command line argument but improper config', () => {
     try {
-        await validateInput(['node', 'index.js', 'test/invalid_reverse_proxy.config.json']);
+        validateInput(['node', 'index.js', 'test/invalid_reverse_proxy.config.json']);
     }
     catch (error) {
         return;
     }
     fail();
 });
-test('validate input with proper command line argument and config', async () => {
-    await validateInput(['node', 'index.js', 'test/valid_reverse_proxy.config.json']);
+test('validate input with proper command line argument and config', () => {
+    validateInput(['node', 'index.js', 'test/valid_reverse_proxy.config.json']);
 });
