@@ -1,7 +1,9 @@
 'use strict'
 
+import Route from './Route.js'
+
 export default interface Config {
   keyPath: string
   certPath: string
-  routes: Array<{ hostname: string, target: string }>
+  routes: Route[]
 }
