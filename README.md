@@ -5,11 +5,14 @@
 [![Windows](https://svgshare.com/i/ZhY.svg)](https://svgshare.com/i/ZhY.svg)
 [![made-with-javascript](https://img.shields.io/badge/Made%20with-JavaScript-ffff00.svg)](https://www.javascript.com)
 [![made-with-typescript](https://img.shields.io/badge/Made%20with-TypeScript-0000e0.svg)](https://www.typescriptlang.org/)
-[![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
+[![Npm package version](https://badgen.net/npm/v/@ii887522/reverse-proxy)](https://www.npmjs.com/package/@ii887522/reverse-proxy)
+[![Npm package daily downloads](https://badgen.net/npm/dm/@ii887522/reverse-proxy)](https://npmjs.com/package/@ii887522/reverse-proxy)
+[![Npm package license](https://badgen.net/npm/license/@ii887522/reverse-proxy)](https://npmjs.com/package/@ii887522/reverse-proxy)
+[![Npm package dependents](https://badgen.net/npm/dependents/@ii887522/reverse-proxy)](https://npmjs.com/package/@ii887522/reverse-proxy)
 
 It is a server that forwards client request to the correct web server for processing, and also forwards server response to the correct web client browser for presentation.
 
-## Table of Contents
+## Table of contents
 - [Coding Style](https://github.com/ii887522/reverse-proxy#coding-style)
 - [Prerequisites](https://github.com/ii887522/reverse-proxy#prerequisites)
 - [Install dependencies](https://github.com/ii887522/reverse-proxy#install-dependencies)
@@ -25,7 +28,7 @@ It is a server that forwards client request to the correct web server for proces
 ```sh
 reverse-proxy <config-file-path>
 ```
-`config-file-path`: It must exists and must not ends with either '/' or '\\'.<br />
+`config-file-path`: It must exists and must not ends with either '/' or '\\'.
 
 A config file passed in must follow the format below:
 ```json
@@ -59,7 +62,7 @@ A config file passed in must follow the format below:
 }
 ```
 
-#### **Example**
+### **Usage example**
 ```json
 {
   "keyPath": "test/key.pem",
@@ -98,44 +101,44 @@ StandardJS - Javascript Standard Style which is a [Visual Studio Code](https://c
   - Markdown All in One
   - StandardJS - Javascript Standard Style
   - YAML
-- [Node.js 16.10.0](https://nodejs.org/en/) and later
+- [Node.js 16.13.2](https://nodejs.org/en/) and later
 
 ## Install dependencies
 ```sh
-ncu -u && npm install
+npm install
 ```
 
-## Lint project
+## Lint the project
 ```sh
 npm run lint
 ```
 
-## Automatically build project on save
+## Build the project
 ```sh
 npm run build
 ```
 
-## Automatically restart project on change
+## Automatically build the project on save
+```sh
+npm run build:watch
+```
+
+## Automatically restart the project on change
 ```sh
 npm run dev <config-file-path>
 ```
 
-## Start project
+## Start the project
 ```sh
 npm start <config-file-path>
 ```
 
-## Test project with code coverage analysis
+## Test the project with code coverage analysis
 ```sh
 npm test
 ```
 
-## Automatically test project with code coverage analysis on change
+## Automatically test the project with code coverage analysis on change
 ```sh
 npm run test:watch
-```
-
-## Deploy project
-```sh
-npm run deploy
 ```

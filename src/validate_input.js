@@ -1,21 +1,14 @@
 'use strict';
-import { access } from 'fs';
+import { accessSync } from 'fs';
+import { readObject } from '@ii887522/hydro';
 import constants from './constants.js';
-import { readObject } from './fs_ext.js';
-export async function validateCommandLineArgs(commandLineArgs) {
+export function validateCommandLineArgs(commandLineArgs) {
     if (commandLineArgs.length !== constants.requiredCommandLineArgCount)
         throw new Error('There must be exactly 1 command line argument passed in! Please try again.');
     if ((commandLineArgs[constants.configFilePathIndex]?.endsWith('/') ?? true) || (commandLineArgs[constants.configFilePathIndex]?.endsWith('\\') ?? true)) {
-        throw new Error("Config file path must not ends with '/' or '\\'! Please try again.");
+        throw new SyntaxError("Config file path must not ends with '/' or '\\'! Please try again.");
     }
-    return await new Promise((resolve, reject) => {
-        access(commandLineArgs[constants.configFilePathIndex] ?? '', error => {
-            if (error !== null)
-                reject(error);
-            else
-                resolve();
-        });
-    });
+    accessSync(commandLineArgs[constants.configFilePathIndex] ?? '');
 }
 export function validateConfig(config) {
     if (typeof config !== 'object')
@@ -50,7 +43,7 @@ export function validateConfig(config) {
     }
     return config;
 }
-export default async function (commandLineArgs) {
-    await validateCommandLineArgs(commandLineArgs);
+export default function (commandLineArgs) {
+    validateCommandLineArgs(commandLineArgs);
     return validateConfig(readObject(commandLineArgs[constants.configFilePathIndex] ?? ''));
 }
